@@ -142,6 +142,10 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
         </div>
       )}
 
+      <footer className="text-mj-muted text-xs text-center mt-auto pt-2">
+        © {puzzle_date.slice(0, 4)} 每日一聼. All rights reserved.
+      </footer>
+
     </main>
   );
 }
