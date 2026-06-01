@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #0d3b2e;
+  color: #f5f0e8;
+  font-family: 'Noto Sans TC', 'Noto Sans', sans-serif;
+  min-height: 100vh;
+}
+
+/* 3D mahjong tile — adapted from codepen.io/louh/pen/ddqgEg */
+.mahjong-tile {
+  background-color: #f5f0eb;
+  border-radius: 6px;
+  box-shadow:
+    inset -1px -1px 3px 1px rgba(181,181,170,0.73),
+    inset 1px 1px 2px 1px #f9f4f0,
+    1px 1px 0 1px #bfbab4,
+    2px 2px 0 1px #bfbab4,
+    3px 3px 0 1px #bbb7b0,
+    4px 4px 0 1px #087209,
+    5px 5px 0 1px #065e07,
+    6px 6px 6px 2px rgba(0,0,0,0.3);
+}
+
+.perspective-tile {
+  perspective: 300px;
+}
+
+/* Wordle-style flip */
+@keyframes flipOut {
+  from { transform: rotateX(0deg); }
+  to   { transform: rotateX(90deg); }
+}
+@keyframes flipIn {
+  from { transform: rotateX(90deg); }
+  to   { transform: rotateX(0deg); }
+}
+.flip-out {
+  animation: flipOut 0.22s ease-in forwards;
+  transform-origin: center;
+}
+.flip-in {
+  animation: flipIn 0.22s ease-out forwards;
+  transform-origin: center;
+}
