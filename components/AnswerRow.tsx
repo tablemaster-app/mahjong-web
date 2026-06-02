@@ -10,9 +10,10 @@ interface Props {
   results?: boolean[];
   slotCount: number;
   animate?: boolean;
+  onTileClick?: (index: number) => void;
 }
 
-export default function AnswerRow({ tiles, results = [], slotCount, animate }: Props) {
+export default function AnswerRow({ tiles, results = [], slotCount, animate, onTileClick }: Props) {
   const [phases, setPhases] = useState<TilePhase[]>(() =>
     tiles.map(() => (animate ? 'idle' : 'done'))
   );
@@ -51,6 +52,7 @@ export default function AnswerRow({ tiles, results = [], slotCount, animate }: P
             notation={tile}
             result={showResult}
             flipClass={flipClass}
+            onClick={onTileClick ? () => onTileClick(i) : undefined}
           />
         );
       })}

@@ -96,7 +96,11 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
         ))}
 
         {phase === 'playing' && (
-          <AnswerRow tiles={selection} slotCount={slotCount} />
+          <AnswerRow
+            tiles={selection}
+            slotCount={slotCount}
+            onTileClick={(i) => handleTileClick(selection[i])}
+          />
         )}
 
         {Array(Math.max(0, emptyRows)).fill(null).map((_, i) => (

@@ -19,7 +19,7 @@ export default function ShareButton({ puzzleDate, guesses, elapsed, won }: Props
     const rows = guesses
       .map(g => g.results.map(r => r ? '🟩' : '🟥').join(''))
       .join('\n');
-    const url = typeof window !== 'undefined' ? window.location.href : '每日一聼';
+    const url = typeof window !== 'undefined' ? window.location.hostname : '每日一聼';
     return `每日一聼 ${date}\n⏱ ${time} | ${tryLabel}\n\n${rows}\n\n${url}`;
   }
 
