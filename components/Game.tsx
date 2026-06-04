@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { detectSuit, suitTiles, formatTime, formatDate } from '@/lib/tiles';
+import { loadStreak, updateStreak } from '@/lib/streak';
 import TileDisplay from './TileDisplay';
 import TilePicker from './TilePicker';
 import AnswerRow from './AnswerRow';
@@ -32,9 +33,14 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [phase, setPhase] = useState<'playing' | 'won' | 'lost'>('playing');
   const [elapsed, setElapsed] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
+    const s = loadStreak();
+    setStreak(s.streak);
+    setBestStreak(s.bestStreak);
     timerRef.current = setInterval(() => setElapsed(e => e + 1), 1000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, []);
@@ -66,8 +72,12 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
     const animDuration = (slotCount - 1) * 300 + 600;
     setTimeout(() => {
       setAnimatingIndex(null);
-      if (results.every(r => r)) setPhase('won');
-      else if (next.length >= MAX_TRIES) setPhase('lost');
+      if (results.every(r => r)) {
+        const updated = updateStreak(puzzle_date);
+        setStreak(updated.streak);
+        setBestStreak(updated.bestStreak);
+        setPhase('won');
+      } else if (next.length >= MAX_TRIES) setPhase('lost');
     }, animDuration);
   }
 
@@ -80,6 +90,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
         <h1 className="text-4xl font-bold text-mj-text tracking-wide">每日一聼</h1>
         <p className="text-mj-muted text-sm mt-1">{formatDate(puzzle_date)}</p>
         <p className="text-mj-muted text-lg font-mono mt-1">⏱ {formatTime(elapsed)}</p>
+        {streak > 0 && <p className="text-orange-400 text-sm mt-0.5">🔥 {streak} 連勝</p>}
       </div>
 
       <TileDisplay tiles={sortedHand} />
@@ -142,6 +153,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
             guesses={guesses}
             elapsed={elapsed}
             won={phase === 'won'}
+            streak={streak}
           />
         </div>
       )}
