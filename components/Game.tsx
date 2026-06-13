@@ -53,14 +53,12 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
   function handleTileClick(tile: string) {
     if (phase !== 'playing') return;
     setSelection(prev =>
-      prev.includes(tile)
-        ? prev.filter(t => t !== tile)
-        : prev.length < slotCount ? [...prev, tile] : prev
+      prev.includes(tile) ? prev.filter(t => t !== tile) : [...prev, tile]
     );
   }
 
   function handleSubmit() {
-    if (selection.length !== slotCount || phase !== 'playing') return;
+    if (selection.length === 0 || phase !== 'playing') return;
     const winSet = new Set(winning_tiles);
     const results = selection.map(t => winSet.has(t));
     const record: GuessRecord = { tiles: selection, results };
@@ -73,7 +71,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
     const animDuration = (slotCount - 1) * 300 + 600;
     setTimeout(() => {
       setAnimatingIndex(null);
-      if (results.every(r => r)) {
+      if (selection.length === slotCount && results.every(r => r)) {
         const updated = updateStreak(puzzle_date);
         setStreak(updated.streak);
         setBestStreak(updated.bestStreak);
@@ -124,7 +122,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
           <div className="flex gap-3 items-center">
             <button
               onClick={handleSubmit}
-              disabled={selection.length !== slotCount || animatingIndex !== null}
+              disabled={selection.length === 0 || animatingIndex !== null}
               className="px-10 py-3 bg-mj-border text-mj-text rounded-full font-bold
                          disabled:opacity-30 disabled:cursor-not-allowed
                          hover:bg-green-700 transition-colors text-lg"
