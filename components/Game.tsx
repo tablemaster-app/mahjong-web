@@ -53,7 +53,9 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
   function handleTileClick(tile: string) {
     if (phase !== 'playing') return;
     setSelection(prev =>
-      prev.includes(tile) ? prev.filter(t => t !== tile) : [...prev, tile]
+      prev.includes(tile)
+        ? prev.filter(t => t !== tile)
+        : showHint && prev.length >= slotCount ? prev : [...prev, tile]
     );
   }
 
