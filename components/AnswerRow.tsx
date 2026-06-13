@@ -29,7 +29,7 @@ export default function AnswerRow({ tiles, results = [], slotCount, animate, hin
   }, [animate, tiles.length]);
 
   const hasResult = results.length > 0;
-  const displayCount = hasResult || hint ? slotCount : tiles.length;
+  const displayCount = hint && !hasResult ? slotCount : tiles.length;
 
   return (
     <div className="flex gap-1 justify-center">
