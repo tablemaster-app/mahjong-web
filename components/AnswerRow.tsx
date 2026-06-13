@@ -10,10 +10,11 @@ interface Props {
   results?: boolean[];
   slotCount: number;
   animate?: boolean;
+  hint?: boolean;
   onTileClick?: (index: number) => void;
 }
 
-export default function AnswerRow({ tiles, results = [], slotCount, animate, onTileClick }: Props) {
+export default function AnswerRow({ tiles, results = [], slotCount, animate, hint, onTileClick }: Props) {
   const [phases, setPhases] = useState<TilePhase[]>(() =>
     tiles.map(() => (animate ? 'idle' : 'done'))
   );
@@ -27,12 +28,14 @@ export default function AnswerRow({ tiles, results = [], slotCount, animate, onT
     });
   }, [animate, tiles.length]);
 
+  const hasResult = results.length > 0;
+  const displayCount = hasResult || hint ? slotCount : tiles.length;
+
   return (
     <div className="flex gap-1 justify-center">
-      {Array(slotCount).fill(null).map((_, i) => {
+      {Array(displayCount).fill(null).map((_, i) => {
         const tile = tiles[i];
         const phase = phases[i] ?? 'idle';
-        const hasResult = results.length > 0;
 
         if (!tile) {
           return (

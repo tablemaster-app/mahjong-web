@@ -32,6 +32,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
   const [guesses, setGuesses] = useState<GuessRecord[]>([]);
   const [animatingIndex, setAnimatingIndex] = useState<number | null>(null);
   const [phase, setPhase] = useState<'playing' | 'won' | 'lost'>('playing');
+  const [showHint, setShowHint] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
@@ -110,27 +111,35 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
           <AnswerRow
             tiles={selection}
             slotCount={slotCount}
+            hint={showHint}
             onTileClick={(i) => handleTileClick(selection[i])}
           />
         )}
 
-        {Array(Math.max(0, emptyRows)).fill(null).map((_, i) => (
-          <AnswerRow key={`e${i}`} tiles={[]} slotCount={slotCount} />
-        ))}
       </div>
 
       {phase === 'playing' && (
         <>
           <TilePicker tiles={picker} selected={selection} onTileClick={handleTileClick} />
-          <button
-            onClick={handleSubmit}
-            disabled={selection.length !== slotCount || animatingIndex !== null}
-            className="px-10 py-3 bg-mj-border text-mj-text rounded-full font-bold
-                       disabled:opacity-30 disabled:cursor-not-allowed
-                       hover:bg-green-700 transition-colors text-lg"
-          >
-            確認
-          </button>
+          <div className="flex gap-3 items-center">
+            <button
+              onClick={handleSubmit}
+              disabled={selection.length !== slotCount || animatingIndex !== null}
+              className="px-10 py-3 bg-mj-border text-mj-text rounded-full font-bold
+                         disabled:opacity-30 disabled:cursor-not-allowed
+                         hover:bg-green-700 transition-colors text-lg"
+            >
+              確認
+            </button>
+            {!showHint && (
+              <button
+                onClick={() => setShowHint(true)}
+                className="px-4 py-3 text-mj-muted text-sm hover:text-mj-text transition-colors"
+              >
+                提示
+              </button>
+            )}
+          </div>
         </>
       )}
 
