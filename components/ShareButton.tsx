@@ -21,8 +21,8 @@ export default function ShareButton({ puzzleDate, guesses, elapsed, won, streak 
     const rows = guesses
       .map(g => g.results.map(r => r ? '🟩' : '🟥').join(''))
       .join('\n');
-    const url = typeof window !== 'undefined' ? window.location.hostname : '每日一聼';
-    return `每日一聼 ${date}\n⏱ ${time} | ${tryLabel}${streakLabel}\n\n${rows}\n\n${url}`;
+    const url = typeof window !== 'undefined' ? window.location.hostname : '每日一聽';
+    return `每日一聽 ${date}\n⏱ ${time} | ${tryLabel}${streakLabel}\n\n${rows}\n\n${url}`;
   }
 
   async function handleShare() {

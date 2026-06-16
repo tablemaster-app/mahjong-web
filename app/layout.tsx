@@ -3,7 +3,7 @@ import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: '每日一聼',
+  title: '每日一聽',
   description: '每日麻將聽牌挑戰 — 猜猜今日聽什麼牌？',
 };
 

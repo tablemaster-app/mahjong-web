@@ -88,7 +88,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
     <main className="min-h-screen flex flex-col items-center px-4 py-8 max-w-lg mx-auto gap-5">
 
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-mj-text tracking-wide">每日一聼</h1>
+        <h1 className="text-4xl font-bold text-mj-text tracking-wide">每日一聽</h1>
         <p className="text-mj-muted text-sm mt-1">{formatDate(puzzle_date)}</p>
         <p className="text-mj-muted text-lg font-mono mt-1">⏱ {formatTime(elapsed)}</p>
         {streak > 0 && <p className="text-orange-400 text-sm mt-0.5">🔥 {streak} 連勝</p>}
@@ -168,7 +168,7 @@ export default function Game({ puzzle }: { puzzle: Puzzle }) {
       )}
 
       <footer className="text-mj-muted text-xs text-center mt-auto pt-2">
-        © {puzzle_date.slice(0, 4)} 每日一聼. All rights reserved.
+        © {puzzle_date.slice(0, 4)} 每日一聽. All rights reserved.
       </footer>
 
     </main>
